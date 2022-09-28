@@ -16,7 +16,6 @@ router.get('/', async(req,res) => {
 
 // submit a post
 router.post('/', async (req,res) => {
-    console.log(req.body)
     const user = new Users({
         name:req.body.name,
         email:req.body.email,
@@ -32,9 +31,9 @@ router.post('/', async (req,res) => {
 });
 
 // specific post
-router.get('/:postId',async(req,res) =>{
+router.get('/:usersId',async(req,res) =>{
     try{
-    const user = await Users.findById(req.params.postId);
+    const user = await Users.findById(req.params.usersId);
     res.json(user);
 }catch(err){
     res.json({message:err});
@@ -42,9 +41,9 @@ router.get('/:postId',async(req,res) =>{
 });
 
 // delete a post
-router.delete('/:postId',async (req,res) =>{
+router.delete('/:usersId',async (req,res) =>{
     try{
-   const removedUser = await Users.deleteOne({_id: req.params.postId});
+   const removedUser = await Users.deleteOne({_id: req.params.usersId});
    res.json(removedUser);
 }catch(err){
     res.json({message:err});
@@ -52,9 +51,9 @@ router.delete('/:postId',async (req,res) =>{
 })
 
 // update a post
-router.patch('/:postId',async (req,res) =>{
+router.patch('/:usersId',async (req,res) =>{
     try{
-        const UpdatedUser = await Users.updateOne({_id: req.params.postId},
+        const UpdatedUser = await Users.updateOne({_id: req.params.usersId},
             {$set:{name : req.body.name}});
             res.json(UpdatedUser);
     }catch(err){

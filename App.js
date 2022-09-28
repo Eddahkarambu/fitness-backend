@@ -8,9 +8,6 @@ require('dotenv/config');
 app.use(bodyParser.json());
 
 // import routes
-const postsRoute = require ('./routes/posts');
-app.use('/posts', postsRoute);
-
 const usersRoute = require ('./routes/users');
 app.use('/users', usersRoute);
 
