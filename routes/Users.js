@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Users = require('../models/Users');
+const bcrypt = require("bcrypt");
+
 
 
 // gets back all the posts
@@ -16,13 +18,15 @@ router.get('/', async(req,res) => {
 
 // submit a post
 router.post('/', async (req,res) => {
+    const hashedPassword = await bcrypt.hash(req.body.password,13);
     const user = new Users({
         name:req.body.name,
         email:req.body.email,
-        password:req.body.password,
+        password:hashedPassword,
         userRole:req.body.userRole,
     });
     try{
+    
     const savedUser = await user.save()
     res.json(savedUser);
     }catch(err){
