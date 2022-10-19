@@ -4,15 +4,23 @@ const Users = require('../models/Users');
 const bcrypt = require("bcrypt");
 
 
+// const find = details.find({name ,email,userRole},(error, data)=>{
+//     if(error){
+//         console.log(error)
+//     }else {
+//         console.log (data)
+//     }
+// })
 
 // gets back all the posts
 router.get('/', async(req,res) => {
     try{
-        const users = await Users.find()
+        const users = await Users.find({}, '-password')
         res.json(users);
         
     }catch(err){
-        res.json({massage : err})
+        console.log(err)
+        res.json({message : err})
     }
 });
 
@@ -30,7 +38,8 @@ router.post('/', async (req,res) => {
     const savedUser = await user.save()
     res.json(savedUser);
     }catch(err){
-        res.json({massage : err})
+        console.log(err)
+        res.json({message : err})
     }
 });
 
@@ -54,6 +63,7 @@ router.delete('/:usersId',async (req,res) =>{
 }
 })
 
+
 // update a post
 router.patch('/:usersId',async (req,res) =>{
     try{
@@ -65,5 +75,4 @@ router.patch('/:usersId',async (req,res) =>{
     
     }
 });
-
 module.exports = router;
