@@ -14,10 +14,34 @@ router.get('/', async(req,res) => {
         
         
     }catch(err){
-        console.log(err)
         res.status(500).json({message : err})
     }
 });
+
+// login user
+router.post('/login',async(req,res) =>{
+
+    try{
+        const hashedPassword = await bcrypt.hash(req.body.password,13);
+        Users.findOne({ email: req.body.email }, (error, result) =>{
+            if (result) { 
+                if(result.password == hashedPassword){
+                    res.status(200).json({message:"logged in successfully"})
+                }else{
+                    res.status(401).json({ message: "incorrect email or password" });
+                }
+            } else {
+                res.status(404).json({ message: "Account does not exist" });
+            }
+        });
+        
+        }catch(err){
+            res.status(500).json({message: err})
+            
+        }
+})
+
+
 
 // submit a user
 router.post('/', async (req,res) => {
@@ -32,7 +56,6 @@ router.post('/', async (req,res) => {
     await user.save();
     res.status(200).json({message: "You have registerd successfully" })
     }catch(err){
-        console.log(err)
         res.status(500).json({message : err})
         
     }
