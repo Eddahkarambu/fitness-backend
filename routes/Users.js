@@ -43,8 +43,9 @@ router.post('/login',async(req,res) =>{
 
 
 
-// submit a user
+// register a user
 router.post('/', async (req,res) => {
+    console.log(req.body)
     const hashedPassword = await bcrypt.hash(req.body.password,13);
     const user = new Users({
         name:req.body.name,
