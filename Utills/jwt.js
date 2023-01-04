@@ -12,8 +12,7 @@ function authenticateToken(req, res) {
     console.log(err);
 
     if (err) return res.status(403).json({ message: "Invalid Token" });
-
-    req.user = user;
+    return (req.user = user);
   });
 }
 module.exports = { createToken, authenticateToken };

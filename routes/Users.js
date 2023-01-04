@@ -8,6 +8,9 @@ const { authenticateToken, createToken } = require("../Utills/jwt");
 router.get("/", async (req, res) => {
   try {
     authenticateToken(req, res);
+    if (!req.user) {
+      return;
+    }
     const users = await Users.find({}, "-password");
 
     res.status(200).send(users);
